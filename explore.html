@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Veloura | Explore</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #000, #1a1a1a);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .header {
+      position: absolute;
+      top: 20px;
+      text-align: center;
+    }
+
+    .header h2 {
+      color: gold;
+      margin: 0;
+    }
+
+    .card {
+      width: 300px;
+      height: 450px;
+      border-radius: 20px;
+      overflow: hidden;
+      background: #111;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.7);
+      position: relative;
+    }
+
+    .card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .info {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(transparent, rgba(0,0,0,0.9));
+    }
+
+    .info h3 {
+      margin: 0;
+    }
+
+    .info p {
+      margin: 5px 0;
+      font-size: 14px;
+      color: #ccc;
+    }
+
+    .buttons {
+      margin-top: 15px;
+      display: flex;
+      gap: 20px;
+    }
+
+    button {
+      padding: 12px 20px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .like {
+      background: gold;
+      color: black;
+    }
+
+    .pass {
+      background: #444;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="header">
+    <h2 id="welcome"></h2>
+  </div>
+
+  <div class="card">
+    <img id="profileImage" src="">
+    <div class="info">
+      <h3 id="profileName"></h3>
+      <p id="profileLocation"></p>
+    </div>
+  </div>
+
+  <div class="buttons">
+    <button class="pass" onclick="nextProfile()">Pass</button>
+    <button class="like" onclick="likeProfile()">Like</button>
+  </div>
+
+  <script src="js/profiles.js"></script>
+
+  <script>
+    const userName = localStorage.getItem("userName") || "User";
+    document.getElementById("welcome").innerText = "Welcome, " + userName;
+
+    let profiles = getPersonalizedProfiles();
+    let index = 0;
+
+    function showProfile() {
+      let p = profiles[index];
+
+      document.getElementById("profileImage").src = p.image;
+      document.getElementById("profileName").innerText = p.name + ", " + p.age;
+      document.getElementById("profileLocation").innerText =
+        p.location + " • " + p.distance + "km away" + (p.online ? " • Online" : "");
+    }
+
+    function nextProfile() {
+      index++;
+      if (index >= profiles.length) {
+        index = 0;
+      }
+      showProfile();
+    }
+
+    function likeProfile() {
+      alert("You liked " + profiles[index].name);
+
+      // simulate match
+      if (Math.random() > 0.5) {
+        setTimeout(() => {
+          alert("🎉 You matched with " + profiles[index].name);
+
+          // redirect to VIP screen later
+        }, 500);
+      }
+
+      nextProfile();
+    }
+
+    showProfile();
+  </script>
+
+</body>
+</html>
