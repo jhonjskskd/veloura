@@ -32,13 +32,14 @@
     }
 
     .card {
-      width: 300px;
-      height: 450px;
+      width: 320px;
+      height: 480px;
       border-radius: 20px;
       overflow: hidden;
       background: #111;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.7);
+      box-shadow: 0 15px 50px rgba(0,0,0,0.8);
       position: relative;
+      animation: fadeIn 0.5s ease;
     }
 
     .card img {
@@ -57,6 +58,7 @@
 
     .info h3 {
       margin: 0;
+      font-size: 18px;
     }
 
     .info p {
@@ -66,17 +68,18 @@
     }
 
     .buttons {
-      margin-top: 15px;
+      margin-top: 20px;
       display: flex;
       gap: 20px;
     }
 
     button {
-      padding: 12px 20px;
+      padding: 12px 25px;
       border-radius: 10px;
       border: none;
       cursor: pointer;
       font-weight: bold;
+      transition: 0.3s;
     }
 
     .like {
@@ -84,9 +87,22 @@
       color: black;
     }
 
+    .like:hover {
+      transform: scale(1.05);
+    }
+
     .pass {
       background: #444;
       color: white;
+    }
+
+    .pass:hover {
+      transform: scale(1.05);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
     }
   </style>
 </head>
@@ -137,14 +153,23 @@
     }
 
     function likeProfile() {
-      alert("You liked " + profiles[index].name);
+      let current = profiles[index];
+
+      alert("You liked " + current.name);
 
       // simulate match
       if (Math.random() > 0.5) {
         setTimeout(() => {
-          alert("🎉 You matched with " + profiles[index].name);
+          alert("🎉 You matched with " + current.name);
 
-          // redirect to VIP screen later
+          const isVip = localStorage.getItem("vip");
+
+          if (isVip === "true") {
+            window.location.href = "chat.html";
+          } else {
+            window.location.href = "vip.html";
+          }
+
         }, 500);
       }
 
